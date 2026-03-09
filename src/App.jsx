@@ -3,6 +3,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "./features/cart/cartSlice";
 import CartPanel from "./components/CartPanel";
+import "./App.css";
 
 function App() {
 
@@ -24,20 +25,16 @@ function App() {
 
   }, []);
 
-  if (loading) return <h2>Loading...</h2>;
+  if (loading) return <h2 className="loading">Loading...</h2>;
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="container">
 
-      <h1>Products</h1>
+      <h1 className="title">🛒 Product Store</h1>
 
-      <h2>Cart Items: {count}</h2>
+      <h2 className="cartCount">Cart Items: {count}</h2>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3,1fr)",
-        gap: "20px"
-      }}>
+      <div className="productGrid">
 
         {products.map(product => {
 
@@ -47,25 +44,20 @@ function App() {
 
           return (
 
-            <div key={product.id} style={{
-              border: "1px solid gray",
-              padding: "10px"
-            }}>
+            <div key={product.id} className="card">
 
               <img
                 src={product.thumbnail}
-                width="100%"
                 alt={product.title}
               />
 
               <h3>{product.title}</h3>
-              <p>${product.price}</p>
+
+              <p className="price">${product.price}</p>
 
               <button
                 disabled={alreadyAdded}
-                onClick={() =>
-                  dispatch(addToCart(product))
-                }
+                onClick={() => dispatch(addToCart(product))}
               >
                 {alreadyAdded ? "Added" : "Add To Cart"}
               </button>
@@ -73,12 +65,11 @@ function App() {
             </div>
 
           );
+
         })}
 
       </div>
-
-      <hr />
-
+<hr />
       <CartPanel />
 
     </div>
